@@ -93,6 +93,7 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.foundation.android)
     implementation(libs.androidx.foundation.android)
+    testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -119,4 +120,37 @@ dependencies {
     // OkHttp
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
+
+
+    // Pruebas unitarias básicas con JUnit
+    testImplementation("junit:junit:4.13.2")
+
+    // Pruebas con corutinas
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+    // Para testear flows de manera sencilla (Turbine)
+    testImplementation("app.cash.turbine:turbine:0.12.1")
+
+    // Librería de mocking (opcional, puedes usar Mockk o Mockito)
+    testImplementation("io.mockk:mockk:1.13.4")
+
+    // Room Testing: Permite usar la base de datos en memoria
+    testImplementation("androidx.room:room-testing:2.5.1")
+
+    // Pruebas instrumentadas (Android)
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Pruebas de UI con Jetpack Compose
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
+    /**
+     * JUnit: Proporciona el framework básico para pruebas unitarias.
+     * kotlinx-coroutines-test: Facilita la prueba de corutinas y flujos (Flows) de forma controlada.
+     * Turbine: Útil para probar Flow de manera sencilla y declarativa.
+     * Mockk: Permite simular (mockear) dependencias y objetos en pruebas unitarias.
+     * Room Testing: Ofrece utilidades para probar la integración con Room usando bases de datos en memoria.
+     * androidx.test.ext:junit y espresso-core: Son para pruebas instrumentadas en dispositivos o emuladores Android.
+     * Compose UI Test: Permite realizar pruebas de UI para componentes construidos con Jetpack Compose.
+     */
 }

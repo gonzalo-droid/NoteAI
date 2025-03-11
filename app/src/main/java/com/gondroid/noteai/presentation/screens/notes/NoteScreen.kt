@@ -43,7 +43,6 @@ fun NotesScreenRoot(
             when (action) {
                 is NoteScreenAction.OnAddNote -> navigateTo(null)
                 is NoteScreenAction.OnClickNote -> navigateTo(action.noteId)
-                else -> viewModel.onAction(action)
             }
         },
     )
@@ -91,15 +90,16 @@ fun NotesScreen(
 
         LazyVerticalStaggeredGrid(
             modifier =
-                Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 16.dp),
+            Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp),
             columns = StaggeredGridCells.Fixed(2),
             verticalItemSpacing = 4.dp,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             items(
                 items = state.notes,
+                key = { note -> note.id }
             ) { note ->
                 NoteItem(
                     modifier = Modifier,

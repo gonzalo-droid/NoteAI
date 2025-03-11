@@ -20,6 +20,7 @@ okkhttp = "4.12.0"
 foundationAndroid = "1.7.2"
 foundationLayoutAndroid = "1.7.2"
 ktlint = "11.5.0"
+junit = "4.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +74,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkht
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okkhttp" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
