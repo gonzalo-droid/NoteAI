@@ -93,7 +93,6 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.foundation.android)
     implementation(libs.androidx.foundation.android)
-    testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -122,28 +121,24 @@ dependencies {
     implementation(libs.okhttp.logging)
 
 
+    // testing
     // Pruebas unitarias básicas con JUnit
-    testImplementation("junit:junit:4.13.2")
-
+    testImplementation(libs.junit.v4132)
     // Pruebas con corutinas
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-
-    // Para testear flows de manera sencilla (Turbine)
-    testImplementation("app.cash.turbine:turbine:0.12.1")
-
+    testImplementation(libs.kotlinx.coroutines.test)
     // Librería de mocking (opcional, puedes usar Mockk o Mockito)
-    testImplementation("io.mockk:mockk:1.13.4")
-
+    testImplementation(libs.mockk)
     // Room Testing: Permite usar la base de datos en memoria
-    testImplementation("androidx.room:room-testing:2.5.1")
+    testImplementation(libs.androidx.room.testing)
+    // Turbine: Para testear Flows y StateFlow de forma reactiva
+    testImplementation(libs.app.turbine)
+    // robolectric
+    testImplementation(libs.robolectric)
 
-    // Pruebas instrumentadas (Android)
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation(libs.androidx.core) // Para ApplicationProvider
+    testImplementation(libs.androidx.core.testing) // Para pruebas de Room
 
-    // Pruebas de UI con Jetpack Compose
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
+
     /**
      * JUnit: Proporciona el framework básico para pruebas unitarias.
      * kotlinx-coroutines-test: Facilita la prueba de corutinas y flujos (Flows) de forma controlada.

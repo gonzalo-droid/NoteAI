@@ -29,14 +29,6 @@ constructor(
     val events = eventChannel.receiveAsFlow()
 
     init {
-        state =
-            state.copy(
-                date =
-                LocalDate.now().let {
-                    DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy").format(it)
-                },
-            )
-
         noteLocalDataSource.notesFlow
             .onEach { notes ->
                 state =

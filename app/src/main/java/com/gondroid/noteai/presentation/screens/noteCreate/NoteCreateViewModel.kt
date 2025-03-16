@@ -41,7 +41,7 @@ class NoteCreateViewModel
         // de channel to flow, UI event listening event
         val event = eventChannel.receiveAsFlow()
         private val canSaveNote = snapshotFlow { state.title.text.toString() }
-        private val noteData = savedStateHandle.toRoute<NoteCreateScreenRoute>()
+        private val noteData : NoteCreateScreenRoute = savedStateHandle.toRoute<NoteCreateScreenRoute>()
         private var editedNote: Note? = null
 
         private val _recordedFilePath = MutableStateFlow<String?>(null)
@@ -52,10 +52,13 @@ class NoteCreateViewModel
         }
 
         init {
-
             state = state.copy(noteId = noteData.noteId ?: UUID.randomUUID().toString())
+            println("SavedStateHandle keys: ${savedStateHandle.keys()}")
+            println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")}")
+            println("noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")?.noteId}")
 
             noteData.noteId?.let {
+                println("get noteId: $it")
                 viewModelScope.launch {
                     localDataSource.getNoteById(noteData.noteId)?.let { task ->
                         editedNote = task
@@ -63,7 +66,7 @@ class NoteCreateViewModel
                             state.copy(
                                 title = TextFieldState(task.title),
                                 content = TextFieldState(task.content ?: ""),
-                                category = if (task.category == null) null else task.category.toString(),
+                                category = task.category?.toString(),
                             )
                     }
                 }
