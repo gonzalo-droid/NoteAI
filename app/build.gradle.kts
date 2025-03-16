@@ -148,4 +148,5 @@ dependencies {
      * androidx.test.ext:junit y espresso-core: Son para pruebas instrumentadas en dispositivos o emuladores Android.
      * Compose UI Test: Permite realizar pruebas de UI para componentes construidos con Jetpack Compose.
      */
+    testImplementation(kotlin("test"))
 }
