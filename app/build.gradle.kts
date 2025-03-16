@@ -119,4 +119,34 @@ dependencies {
     // OkHttp
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
+
+
+    // testing
+    // Pruebas unitarias básicas con JUnit
+    testImplementation(libs.junit.v4132)
+    // Pruebas con corutinas
+    testImplementation(libs.kotlinx.coroutines.test)
+    // Librería de mocking (opcional, puedes usar Mockk o Mockito)
+    testImplementation(libs.mockk)
+    // Room Testing: Permite usar la base de datos en memoria
+    testImplementation(libs.androidx.room.testing)
+    // Turbine: Para testear Flows y StateFlow de forma reactiva
+    testImplementation(libs.app.turbine)
+    // robolectric
+    testImplementation(libs.robolectric)
+
+    testImplementation(libs.androidx.core) // Para ApplicationProvider
+    testImplementation(libs.androidx.core.testing) // Para pruebas de Room
+
+
+    /**
+     * JUnit: Proporciona el framework básico para pruebas unitarias.
+     * kotlinx-coroutines-test: Facilita la prueba de corutinas y flujos (Flows) de forma controlada.
+     * Turbine: Útil para probar Flow de manera sencilla y declarativa.
+     * Mockk: Permite simular (mockear) dependencias y objetos en pruebas unitarias.
+     * Room Testing: Ofrece utilidades para probar la integración con Room usando bases de datos en memoria.
+     * androidx.test.ext:junit y espresso-core: Son para pruebas instrumentadas en dispositivos o emuladores Android.
+     * Compose UI Test: Permite realizar pruebas de UI para componentes construidos con Jetpack Compose.
+     */
+    testImplementation(kotlin("test"))
 }

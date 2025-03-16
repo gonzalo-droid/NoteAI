@@ -10,7 +10,6 @@ class NoteScreenPreviewProvider : PreviewParameterProvider<NoteDataState> {
         get() =
             sequenceOf(
                 NoteDataState(
-                    date = "March 29, 2024",
                     notes = notes,
                 ),
             )

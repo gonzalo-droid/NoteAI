@@ -1,8 +1,12 @@
 [versions]
 agp = "8.6.0"
+core = "1.6.1"
+coreTesting = "2.2.0"
+junitVersion = "4.13.2"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 hilt = "2.51.1"
+kotlinxCoroutinesTest = "1.6.4"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 ksp = "2.0.0-1.0.22"
@@ -10,9 +14,13 @@ kotlinx-serialization = "1.6.3"
 coroutines = "1.9.0"
 composeBom = "2024.04.01"
 materialIconsExtended = "1.7.7"
+mockk = "1.13.4"
 navigationCompose = "2.8.1"
 navigationComposeHilt = "1.2.0"
+robolectric = "4.14.1"
 room = "2.6.1"
+roomTesting = "2.5.1"
+turbineVersion = "1.2.0"
 uiTextGoogleFonts = "1.7.5"
 moshi = "1.15.1"
 retrofit = "2.10.0"
@@ -20,6 +28,7 @@ okkhttp = "4.12.0"
 foundationAndroid = "1.7.2"
 foundationLayoutAndroid = "1.7.2"
 ktlint = "11.5.0"
+junit = "4.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +82,18 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkht
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okkhttp" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+
+
+# test
+app-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
+junit-v4132 = { module = "junit:junit", version.ref = "junitVersion" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
