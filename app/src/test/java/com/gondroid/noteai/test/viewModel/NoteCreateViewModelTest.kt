@@ -12,7 +12,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -42,63 +41,51 @@ class NoteCreateViewModelTest {
     @Test
     fun `when initialized with existing note, state should reflect note details`() = runTest {
         val noteId = "123"
-        savedStateHandle =
-            SavedStateHandle(
-                mapOf("noteData" to NoteCreateScreenRoute(noteId = noteId))
-            )
 
-        println("SavedStateHandle has noteId: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")?.noteId}")
-
-        // 1️⃣ Mock de la respuesta con delay simulado
-        coEvery { localDataSource.getNoteById(noteId) } coAnswers {
-            delay(300)
-            Note(
-                id = noteId,
-                title = "Test Note",
-                content = "Test Content",
-                category = "Personal"
-            )
+        // ✅ Asignar correctamente el `SavedStateHandle`
+        val savedStateHandle = SavedStateHandle().apply {
+            set("androidx.lifecycle.navArgs", NoteCreateScreenRoute(noteId = noteId))
         }
 
-        viewModel =
-            NoteCreateViewModel(
-                savedStateHandle,
-                localDataSource,
-                voiceRecorderLocalDataSource
-            )
+        // ✅ Mockear respuesta de `getNoteById`
+        coEvery { localDataSource.getNoteById(noteId) } returns Note(
+            id = noteId,
+            title = "Test Note",
+            content = "Test Content",
+            category = "Personal"
+        )
 
-        // 2️⃣ Crear el ViewModel después del mock
+        // ✅ Instanciar el ViewModel con el `SavedStateHandle`
+        viewModel = NoteCreateViewModel(
+            savedStateHandle,
+            localDataSource,
+            voiceRecorderLocalDataSource
+        )
+
         println("init viewmodel")
 
-
-        // 3️⃣ Avanzar la ejecución de corutinas
         advanceUntilIdle()
 
-        // 4️⃣ Verificar que `getNoteById` se llamó dentro del ViewModelScope
+        // ✅ Verificar que se llamó `getNoteById`
         coVerify(exactly = 1) { localDataSource.getNoteById(noteId) }
 
-        // 5️⃣ Validar estado del ViewModel
+        // ✅ Validar que el estado del ViewModel se actualizó correctamente
         assertEquals("Test Note", viewModel.state.title.text)
         assertEquals("Test Content", viewModel.state.content.text)
         assertEquals("Personal", viewModel.state.category)
     }
-
     @Test
     fun `when initialized without noteId, should start with empty state`() = runTest {
-        // ✅ Caso 2: No se recibe un noteId, se debe crear una nueva nota
         savedStateHandle =
             SavedStateHandle(mapOf("noteArgs" to NoteCreateScreenRoute(noteId = null)))
 
-        // Crear el ViewModel
         viewModel =
             NoteCreateViewModel(savedStateHandle, localDataSource, voiceRecorderLocalDataSource)
 
         advanceUntilIdle() // Esperar a que terminen las corutinas
 
-        // ✅ Verificar que `getNoteById` NO se llamó
         coVerify(exactly = 0) { localDataSource.getNoteById("123") }
 
-        // ✅ Validar que el estado está vacío
         assertEquals("", viewModel.state.title.text)
         assertEquals("", viewModel.state.content.text)
         assertEquals(null, viewModel.state.category)
