@@ -27,137 +27,137 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteCreateViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        private val localDataSource: NoteLocalDataSource,
-        private val voiceRecorderLocalDataSource: VoiceRecorderLocalDataSource,
-    ) : ViewModel() {
-        var state by mutableStateOf(NoteCreateScreenState())
-            private set
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    private val localDataSource: NoteLocalDataSource,
+    private val voiceRecorderLocalDataSource: VoiceRecorderLocalDataSource,
+) : ViewModel() {
+    var state by mutableStateOf(NoteCreateScreenState())
+        private set
 
-        private var eventChannel = Channel<NoteCreateEvent>()
+    private var eventChannel = Channel<NoteCreateEvent>()
 
-        // de channel to flow, UI event listening event
-        val event = eventChannel.receiveAsFlow()
-        private val canSaveNote = snapshotFlow { state.title.text.toString() }
-        private val noteData : NoteCreateScreenRoute = savedStateHandle.toRoute<NoteCreateScreenRoute>()
-        private var editedNote: Note? = null
+    // de channel to flow, UI event listening event
+    val event = eventChannel.receiveAsFlow()
+    private val canSaveNote = snapshotFlow { state.title.text.toString() }
+    private val noteData: NoteCreateScreenRoute = savedStateHandle.toRoute<NoteCreateScreenRoute>()
+    private var editedNote: Note? = null
 
-        private val _recordedFilePath = MutableStateFlow<String?>(null)
-        val recordedFilePath: StateFlow<String?> = _recordedFilePath
+    private val _recordedFilePath = MutableStateFlow<String?>(null)
+    val recordedFilePath: StateFlow<String?> = _recordedFilePath
 
-        fun updateRecordedFilePath(filePath: String?) {
-            _recordedFilePath.value = filePath
-        }
+    fun updateRecordedFilePath(filePath: String?) {
+        _recordedFilePath.value = filePath
+    }
 
-        init {
-            state = state.copy(noteId = noteData.noteId ?: UUID.randomUUID().toString())
-            println("SavedStateHandle keys: ${savedStateHandle.keys()}")
-            println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")}")
-            println("noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")?.noteId}")
-
-            noteData.noteId?.let {
-                println("get noteId: $it")
-                viewModelScope.launch {
-                    localDataSource.getNoteById(noteData.noteId)?.let { task ->
-                        editedNote = task
-                        state =
-                            state.copy(
-                                title = TextFieldState(task.title),
-                                content = TextFieldState(task.content ?: ""),
-                                category = task.category?.toString(),
-                            )
-                    }
+    init {
+        state = state.copy(noteId = noteData.noteId ?: UUID.randomUUID().toString())
+        println("SavedStateHandle keys: ${savedStateHandle.keys()}")
+        println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")}")
+        
+        noteData.noteId?.let { noteId ->
+            println("get noteId: $noteId")
+            viewModelScope.launch {
+                localDataSource.getNoteById(noteId)?.let { task ->
+                    editedNote = task
+                    state =
+                        state.copy(
+                            title = TextFieldState(task.title),
+                            content = TextFieldState(task.content ?: ""),
+                            category = task.category?.toString(),
+                        )
                 }
-
-                voiceRecorderLocalDataSource.voiceRecordingsFlow
-                    .onEach { voiceRecordings ->
-                        state =
-                            state.copy(
-                                voiceRecordings = voiceRecordings.filter { it.noteId == noteData.noteId },
-                            )
-                    }.launchIn(viewModelScope)
             }
 
-            canSaveNote
-                .onEach {
-                    state = state.copy(canSaveNote = it.isNotEmpty())
+            voiceRecorderLocalDataSource.voiceRecordingsFlow
+                .onEach { voiceRecordings ->
+                    state =
+                        state.copy(
+                            voiceRecordings = voiceRecordings.filter { it.noteId == noteId },
+                        )
                 }.launchIn(viewModelScope)
         }
 
-        fun saveAudioNoteToDatabase(filePath: String) {
-            updateRecordedFilePath(null)
-            editedNote?.id?.let { noteId ->
-                viewModelScope.launch {
-                    val voiceRecorder =
-                        VoiceRecorder(
-                            id = UUID.randomUUID().toString(),
-                            noteId = noteId,
-                            name = "Note Voice",
-                            path = filePath,
-                            transcription = null,
-                        )
-                    voiceRecorderLocalDataSource.addVoiceRecorder(voiceRecorder)
-                    eventChannel.send(NoteCreateEvent.SaveVoiceRecorder)
-                }
-            }
-        }
+        canSaveNote
+            .onEach {
+                state = state.copy(canSaveNote = it.isNotEmpty())
+            }.launchIn(viewModelScope)
+    }
 
-        fun onAction(action: ActionNoteCreate) {
+    fun saveAudioNoteToDatabase(filePath: String) {
+        updateRecordedFilePath(null)
+        editedNote?.id?.let { noteId ->
             viewModelScope.launch {
-                when (action) {
-                    is ActionNoteCreate.ChangeNoteCategory -> {
-                        state = state.copy(category = action.category.toString())
-                    }
-
-                    is ActionNoteCreate.SaveNote -> {
-                        editedNote?.let {
-                            this@NoteCreateViewModel.localDataSource.updateNote(
-                                updatedNote =
-                                    it.copy(
-                                        id = it.id,
-                                        title = state.title.text.toString(),
-                                        content = state.content.text.toString(),
-                                        category = state.category,
-                                    ),
-                            )
-                        } ?: run {
-                            state.noteId?.let {
-                                val note =
-                                    Note(
-                                        id = it,
-                                        title = state.title.text.toString(),
-                                        content = state.content.text.toString(),
-                                        category = state.category,
-                                    )
-                                localDataSource.addNote(
-                                    note = note,
-                                )
-                            }
-                        }
-                        eventChannel.send(NoteCreateEvent.NoteCreated)
-                    }
-
-                    is ActionNoteCreate.SaveVoiceRecorder -> {
-                        val updatedRecordings =
-                            state.voiceRecordings.map { record ->
-                                if (record.id == action.recordId) {
-                                    val updatedRecord = record.copy(transcription = action.transcription)
-                                    voiceRecorderLocalDataSource.updateVoiceRecorder(updatedRecord)
-                                    updatedRecord
-                                } else {
-                                    record
-                                }
-                            }
-
-                        state = state.copy(voiceRecordings = updatedRecordings)
-
-                        eventChannel.send(NoteCreateEvent.TranscriptionUpdate)
-                    }
-
-                    else -> Unit
-                }
+                val voiceRecorder =
+                    VoiceRecorder(
+                        id = UUID.randomUUID().toString(),
+                        noteId = noteId,
+                        name = "Note Voice",
+                        path = filePath,
+                        transcription = null,
+                    )
+                voiceRecorderLocalDataSource.addVoiceRecorder(voiceRecorder)
+                eventChannel.send(NoteCreateEvent.SaveVoiceRecorder)
             }
         }
     }
+
+    fun onAction(action: ActionNoteCreate) {
+        viewModelScope.launch {
+            when (action) {
+                is ActionNoteCreate.ChangeNoteCategory -> {
+                    state = state.copy(category = action.category.toString())
+                }
+
+                is ActionNoteCreate.SaveNote -> {
+                    editedNote?.let {
+                        this@NoteCreateViewModel.localDataSource.updateNote(
+                            updatedNote =
+                                it.copy(
+                                    id = it.id,
+                                    title = state.title.text.toString(),
+                                    content = state.content.text.toString(),
+                                    category = state.category,
+                                ),
+                        )
+                    } ?: run {
+                        state.noteId?.let {
+                            val note =
+                                Note(
+                                    id = it,
+                                    title = state.title.text.toString(),
+                                    content = state.content.text.toString(),
+                                    category = state.category,
+                                )
+                            localDataSource.addNote(
+                                note = note,
+                            )
+                        }
+                    }
+                    eventChannel.send(NoteCreateEvent.NoteCreated)
+                }
+
+                is ActionNoteCreate.SaveVoiceRecorder -> {
+                    val updatedRecordings =
+                        state.voiceRecordings.map { record ->
+                            if (record.id == action.recordId) {
+                                val updatedRecord =
+                                    record.copy(transcription = action.transcription)
+                                voiceRecorderLocalDataSource.updateVoiceRecorder(updatedRecord)
+                                updatedRecord
+                            } else {
+                                record
+                            }
+                        }
+
+                    state = state.copy(voiceRecordings = updatedRecordings)
+
+                    eventChannel.send(NoteCreateEvent.TranscriptionUpdate)
+                }
+
+                else -> Unit
+            }
+        }
+    }
+}

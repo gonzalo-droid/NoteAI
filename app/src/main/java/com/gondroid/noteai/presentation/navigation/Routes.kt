@@ -1,5 +1,7 @@
 package com.gondroid.noteai.presentation.navigation
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,10 +18,11 @@ data class TaskCreateScreenRoute(
     val taskId: String? = null,
 )
 
+@Parcelize
 @Serializable
 data class NoteCreateScreenRoute(
     val noteId: String? = null,
-)
+) : Parcelable
 
 @Serializable
 object VoiceRecorderRoute
