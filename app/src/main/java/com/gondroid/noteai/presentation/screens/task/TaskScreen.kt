@@ -49,14 +49,14 @@ import com.gondroid.noteai.ui.theme.NoteAppTheme
 fun TaskScreenRoot(
     navigateBack: () -> Boolean,
     navigateToTaskCreateScreen: (taskId: String?, noteId: String) -> Unit,
-    viewModel: TaskScreenViewModel,
+    viewModel: TaskScreenViewModel
 ) {
     val state = viewModel.state
     val event = viewModel.events
     val context = LocalContext.current
 
     LaunchedEffect(
-        true,
+        true
     ) {
         event.collect { event ->
             when (event) {
@@ -65,7 +65,7 @@ fun TaskScreenRoot(
                         .makeText(
                             context,
                             context.getString(R.string.task_deleted),
-                            Toast.LENGTH_SHORT,
+                            Toast.LENGTH_SHORT
                         ).show()
                 }
 
@@ -74,7 +74,7 @@ fun TaskScreenRoot(
                         .makeText(
                             context,
                             context.getString(R.string.all_task_deleted),
-                            Toast.LENGTH_SHORT,
+                            Toast.LENGTH_SHORT
                         ).show()
                 }
 
@@ -83,7 +83,7 @@ fun TaskScreenRoot(
                         .makeText(
                             context,
                             context.getString(R.string.task_updated),
-                            Toast.LENGTH_SHORT,
+                            Toast.LENGTH_SHORT
                         ).show()
                 }
             }
@@ -107,7 +107,7 @@ fun TaskScreenRoot(
 
                 else -> viewModel.onAction(action)
             }
-        },
+        }
     )
 }
 
@@ -116,7 +116,7 @@ fun TaskScreenRoot(
 fun TaskScreen(
     modifier: Modifier = Modifier,
     state: TaskDataState,
-    onAction: (TaskScreenAction) -> Unit,
+    onAction: (TaskScreenAction) -> Unit
 ) {
     var isMenuExtended by remember { mutableStateOf(false) }
 
@@ -128,7 +128,7 @@ fun TaskScreen(
                     Text(
                         text = stringResource(R.string.task),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
@@ -137,49 +137,49 @@ fun TaskScreen(
                         contentDescription = "Back",
                         tint = MaterialTheme.colorScheme.onBackground,
                         modifier =
-                            Modifier.clickable {
-                                onAction(
-                                    TaskScreenAction.Back,
-                                )
-                            },
+                        Modifier.clickable {
+                            onAction(
+                                TaskScreenAction.Back
+                            )
+                        }
                     )
                 },
                 actions = {
                     Box(
                         modifier =
-                            Modifier
-                                .padding(8.dp)
-                                .clickable {
-                                },
+                        Modifier
+                            .padding(8.dp)
+                            .clickable {
+                            }
                     ) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
                             contentDescription = "Add Task",
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                         DropdownMenu(
                             expanded = isMenuExtended,
                             modifier =
-                                Modifier.background(
-                                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                                ),
-                            onDismissRequest = { isMenuExtended = false },
+                            Modifier.background(
+                                color = MaterialTheme.colorScheme.surfaceContainerHighest
+                            ),
+                            onDismissRequest = { isMenuExtended = false }
                         ) {
                             DropdownMenuItem(
                                 text = {
                                     Text(
                                         text = stringResource(R.string.delete_all),
-                                        color = MaterialTheme.colorScheme.onSurface,
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                 },
                                 onClick = {
                                     isMenuExtended = false
                                     onAction(TaskScreenAction.OnDeleteAllTasks)
-                                },
+                                }
                             )
                         }
                     }
-                },
+                }
             )
         },
         floatingActionButton = {
@@ -191,49 +191,49 @@ fun TaskScreen(
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Task",
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
-                },
+                }
             )
-        },
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             item {
                 SummaryInfo(
                     date = state.date,
                     tasksSummary = state.summary,
                     completedTasks = state.completedTask.size,
-                    totalTask = state.pendingTask.size + state.completedTask.size,
+                    totalTask = state.pendingTask.size + state.completedTask.size
                 )
             }
 
             stickyHeader {
                 SectionTitle(
                     modifier =
-                        Modifier
-                            .background(
-                                color = MaterialTheme.colorScheme.surface,
-                            ).fillParentMaxWidth(),
-                    title = stringResource(R.string.pending_tasks),
+                    Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.surface
+                        ).fillParentMaxWidth(),
+                    title = stringResource(R.string.pending_tasks)
                 )
             }
 
             items(
                 items = state.pendingTask,
-                key = { task -> task.id },
+                key = { task -> task.id }
             ) { task ->
                 TaskItem(
                     modifier =
-                        Modifier
-                            .clip(
-                                RoundedCornerShape(8.dp),
-                            ).animateItem(),
+                    Modifier
+                        .clip(
+                            RoundedCornerShape(8.dp)
+                        ).animateItem(),
                     task = task,
                     onItemSelected = { action, id ->
                         when (action) {
@@ -248,31 +248,31 @@ fun TaskScreen(
                     },
                     onToggleCompletion = {
                         onAction(TaskScreenAction.OnToggleTask(task))
-                    },
+                    }
                 )
             }
 
             stickyHeader {
                 SectionTitle(
                     modifier =
-                        Modifier
-                            .background(
-                                color = MaterialTheme.colorScheme.surface,
-                            ).fillParentMaxWidth(),
-                    title = stringResource(R.string.completed_tasks),
+                    Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.surface
+                        ).fillParentMaxWidth(),
+                    title = stringResource(R.string.completed_tasks)
                 )
             }
 
             items(
                 items = state.completedTask,
-                key = { task -> task.id },
+                key = { task -> task.id }
             ) { task ->
                 TaskItem(
                     modifier =
-                        Modifier
-                            .clip(
-                                RoundedCornerShape(8.dp),
-                            ).animateItem(),
+                    Modifier
+                        .clip(
+                            RoundedCornerShape(8.dp)
+                        ).animateItem(),
                     task = task,
                     onItemSelected = { action, id ->
                         when (action) {
@@ -287,7 +287,7 @@ fun TaskScreen(
                     },
                     onToggleCompletion = {
                         onAction(TaskScreenAction.OnToggleTask(task))
-                    },
+                    }
                 )
             }
         }
@@ -297,30 +297,30 @@ fun TaskScreen(
 @Preview
 @Composable
 fun TaskScreenPreviewLight(
-    @PreviewParameter(TaskScreenPreviewProvider::class) state: TaskDataState,
+    @PreviewParameter(TaskScreenPreviewProvider::class) state: TaskDataState
 ) {
     NoteAppTheme {
         TaskScreen(
             state = state,
             onAction = {
-            },
+            }
         )
     }
 }
 
 @Preview(
     showBackground = true,
-    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun TaskScreenPreviewDark(
-    @PreviewParameter(TaskScreenPreviewProvider::class) state: TaskDataState,
+    @PreviewParameter(TaskScreenPreviewProvider::class) state: TaskDataState
 ) {
     NoteAppTheme {
         TaskScreen(
             state = state,
             onAction = {
-            },
+            }
         )
     }
 }

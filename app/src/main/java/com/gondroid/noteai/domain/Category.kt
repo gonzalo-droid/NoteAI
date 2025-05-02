@@ -7,5 +7,5 @@ enum class Category {
     LEARNING,
     HEALTH,
     FINANCE,
-    OTHER,
+    OTHER
 }

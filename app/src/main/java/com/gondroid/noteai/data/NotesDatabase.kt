@@ -13,9 +13,9 @@ import com.gondroid.noteai.data.local.voiceRecorder.VoiceRecorderEntity
     entities = [
         TaskEntity::class,
         NoteEntity::class,
-        VoiceRecorderEntity::class,
+        VoiceRecorderEntity::class
     ],
-    version = 1,
+    version = 1
 )
 abstract class NotesDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao

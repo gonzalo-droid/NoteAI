@@ -28,13 +28,13 @@ class DataModule {
     @Singleton
     fun provideDataBase(
         @ApplicationContext
-        context: Context,
+        context: Context
     ): NotesDatabase =
         Room
             .databaseBuilder(
                 context.applicationContext,
                 NotesDatabase::class.java,
-                "notes_database",
+                "notes_database"
             )
             // Esto elimina y recrea la base de datos en cambios de esquema
             // solo para entorno de prueba
@@ -58,7 +58,7 @@ class DataModule {
     fun provideTaskLocalDataSource(
         taskDao: TaskDao,
         @Named("dispatcherIO")
-        dispatcherIO: CoroutineDispatcher,
+        dispatcherIO: CoroutineDispatcher
     ): TaskLocalDataSource = RoomTaskLocalDataSource(taskDao, dispatcherIO)
 
     @Provides
@@ -66,7 +66,7 @@ class DataModule {
     fun provideNoteLocalDataSource(
         noteDao: NoteDao,
         @Named("dispatcherIO")
-        dispatcherIO: CoroutineDispatcher,
+        dispatcherIO: CoroutineDispatcher
     ): NoteLocalDataSource = RoomNoteLocalDataSource(noteDao, dispatcherIO)
 
     @Provides
@@ -74,6 +74,6 @@ class DataModule {
     fun provideVoiceRecorderLocalDataSource(
         voiceRecorderDao: VoiceRecorderDao,
         @Named("dispatcherIO")
-        dispatcherIO: CoroutineDispatcher,
+        dispatcherIO: CoroutineDispatcher
     ): VoiceRecorderLocalDataSource = RoomVoiceRecorderLocalDataSource(voiceRecorderDao, dispatcherIO)
 }

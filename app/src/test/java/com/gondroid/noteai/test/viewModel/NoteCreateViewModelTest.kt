@@ -32,7 +32,6 @@ class NoteCreateViewModelTest {
     private val voiceRecorderLocalDataSource: VoiceRecorderLocalDataSource = mockk(relaxed = true)
     private var savedStateHandle: SavedStateHandle = mockk(relaxed = true)
 
-
     @Before
     fun setup() {
         every { voiceRecorderLocalDataSource.voiceRecordingsFlow } returns flowOf(emptyList())
@@ -74,6 +73,7 @@ class NoteCreateViewModelTest {
         assertEquals("Test Content", viewModel.state.content.text)
         assertEquals("Personal", viewModel.state.category)
     }
+
     @Test
     fun `when initialized without noteId, should start with empty state`() = runTest {
         savedStateHandle =

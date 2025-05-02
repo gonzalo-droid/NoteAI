@@ -4,14 +4,13 @@ import com.gondroid.noteai.domain.Note
 import com.gondroid.noteai.domain.Task
 import java.time.LocalDateTime
 
-
 object MockUtil {
 
     fun mockNote(
         id: String = "1",
         title: String = "Nota 1",
         content: String = "Contenido de la nota 1",
-        category: String = "Personal",
+        category: String = "Personal"
     ) = Note(
         id = id,
         title = title,
@@ -27,7 +26,7 @@ object MockUtil {
         noteId: String = "1",
         title: String = "Tarea 1",
         description: String = "Descripción de la tarea 1",
-        isCompleted: Boolean = false,
+        isCompleted: Boolean = false
     ) = Task(
         id = id,
         noteId = noteId,
@@ -36,5 +35,4 @@ object MockUtil {
         isCompleted = isCompleted,
         date = LocalDateTime.now()
     )
-
 }

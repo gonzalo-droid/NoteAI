@@ -38,12 +38,12 @@ fun NoteItemPreview() {
             onItemSelected = {
             },
             note =
-                Note(
-                    id = "1",
-                    title = "Project Deadline",
-                    content = "Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday.",
-                    category = Category.WORK.toString(),
-                ),
+            Note(
+                id = "1",
+                title = "Project Deadline",
+                content = "Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday. Submit project report by Friday.",
+                category = Category.WORK.toString()
+            )
         )
     }
 }
@@ -52,7 +52,7 @@ fun NoteItemPreview() {
 fun NoteItem(
     modifier: Modifier = Modifier,
     onItemSelected: (String) -> Unit,
-    note: Note,
+    note: Note
 ) {
     val randomHeight =
         remember {
@@ -72,26 +72,26 @@ fun NoteItem(
 
     Box(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(randomHeight.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(randomColor)
-                .padding(16.dp)
-                .clickable {
-                    onItemSelected(note.id)
-                },
+        Modifier
+            .fillMaxWidth()
+            .height(randomHeight.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(randomColor)
+            .padding(16.dp)
+            .clickable {
+                onItemSelected(note.id)
+            }
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(randomHeight.dp)
-                    .clickable {
-                        onItemSelected(note.id)
-                    },
+            Modifier
+                .fillMaxWidth()
+                .height(randomHeight.dp)
+                .clickable {
+                    onItemSelected(note.id)
+                }
         ) {
             Text(
                 text = note.title,
@@ -99,7 +99,7 @@ fun NoteItem(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis, // Hol..
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
 
             note.content?.let {
@@ -109,7 +109,7 @@ fun NoteItem(
                     maxLines = maxLines,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
 
@@ -125,8 +125,8 @@ fun NoteItem(
                 color = darkenedColor,
                 textAlign = TextAlign.Center,
                 modifier =
-                    Modifier
-                        .align(Alignment.BottomEnd),
+                Modifier
+                    .align(Alignment.BottomEnd)
             )
         }
     }
@@ -134,13 +134,13 @@ fun NoteItem(
 
 fun darkenColor(
     color: Color,
-    factor: Float,
+    factor: Float
 ): Color =
     Color(
         red = (color.red * factor).coerceIn(0f, 1f),
         green = (color.green * factor).coerceIn(0f, 1f),
         blue = (color.blue * factor).coerceIn(0f, 1f),
-        alpha = color.alpha,
+        alpha = color.alpha
     )
 
 fun randomColor(): Color =
@@ -148,5 +148,5 @@ fun randomColor(): Color =
         red = Random.nextFloat(),
         green = Random.nextFloat(),
         blue = Random.nextFloat(),
-        alpha = 0.2f,
+        alpha = 0.2f
     )

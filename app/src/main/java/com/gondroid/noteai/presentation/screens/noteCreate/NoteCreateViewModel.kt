@@ -31,7 +31,7 @@ class NoteCreateViewModel
 constructor(
     savedStateHandle: SavedStateHandle,
     private val localDataSource: NoteLocalDataSource,
-    private val voiceRecorderLocalDataSource: VoiceRecorderLocalDataSource,
+    private val voiceRecorderLocalDataSource: VoiceRecorderLocalDataSource
 ) : ViewModel() {
     var state by mutableStateOf(NoteCreateScreenState())
         private set
@@ -55,7 +55,7 @@ constructor(
         state = state.copy(noteId = noteData.noteId ?: UUID.randomUUID().toString())
         println("SavedStateHandle keys: ${savedStateHandle.keys()}")
         println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")}")
-        
+
         noteData.noteId?.let { noteId ->
             println("get noteId: $noteId")
             viewModelScope.launch {
@@ -65,7 +65,7 @@ constructor(
                         state.copy(
                             title = TextFieldState(task.title),
                             content = TextFieldState(task.content ?: ""),
-                            category = task.category?.toString(),
+                            category = task.category?.toString()
                         )
                 }
             }
@@ -74,7 +74,7 @@ constructor(
                 .onEach { voiceRecordings ->
                     state =
                         state.copy(
-                            voiceRecordings = voiceRecordings.filter { it.noteId == noteId },
+                            voiceRecordings = voiceRecordings.filter { it.noteId == noteId }
                         )
                 }.launchIn(viewModelScope)
         }
@@ -95,7 +95,7 @@ constructor(
                         noteId = noteId,
                         name = "Note Voice",
                         path = filePath,
-                        transcription = null,
+                        transcription = null
                     )
                 voiceRecorderLocalDataSource.addVoiceRecorder(voiceRecorder)
                 eventChannel.send(NoteCreateEvent.SaveVoiceRecorder)
@@ -114,12 +114,12 @@ constructor(
                     editedNote?.let {
                         this@NoteCreateViewModel.localDataSource.updateNote(
                             updatedNote =
-                                it.copy(
-                                    id = it.id,
-                                    title = state.title.text.toString(),
-                                    content = state.content.text.toString(),
-                                    category = state.category,
-                                ),
+                            it.copy(
+                                id = it.id,
+                                title = state.title.text.toString(),
+                                content = state.content.text.toString(),
+                                category = state.category
+                            )
                         )
                     } ?: run {
                         state.noteId?.let {
@@ -128,10 +128,10 @@ constructor(
                                     id = it,
                                     title = state.title.text.toString(),
                                     content = state.content.text.toString(),
-                                    category = state.category,
+                                    category = state.category
                                 )
                             localDataSource.addNote(
-                                note = note,
+                                note = note
                             )
                         }
                     }

@@ -13,8 +13,8 @@ class TaskScreenPreviewProvider : PreviewParameterProvider<TaskDataState> {
                     date = "March 29, 2024",
                     summary = "5 incomplete, 5 completed",
                     completedTask = completedTask,
-                    pendingTask = pendingTask,
-                ),
+                    pendingTask = pendingTask
+                )
             )
 }
 
@@ -29,8 +29,8 @@ val completedTask =
                         title = "Task $it",
                         description = "Description $it",
                         category = Category.WORK,
-                        isCompleted = true,
-                    ),
+                        isCompleted = true
+                    )
                 )
             }
         }
@@ -46,8 +46,8 @@ val pendingTask =
                         title = "Task $it",
                         description = "Description $it",
                         category = Category.OTHER,
-                        isCompleted = false,
-                    ),
+                        isCompleted = false
+                    )
                 )
             }
         }

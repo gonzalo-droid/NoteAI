@@ -10,13 +10,13 @@ sealed interface ActionNoteCreate {
     data object AddVoiceRecorder : ActionNoteCreate
 
     data class ChangeNoteCategory(
-        val category: Category?,
+        val category: Category?
     ) : ActionNoteCreate
 
     data object MyTask : ActionNoteCreate
 
     data class SaveVoiceRecorder(
         val recordId: String,
-        val transcription: String,
+        val transcription: String
     ) : ActionNoteCreate
 }

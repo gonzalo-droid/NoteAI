@@ -14,7 +14,7 @@ data class NoteEntity(
     val title: String,
     val content: String?,
     val category: String? = null,
-    val date: Long,
+    val date: Long
 ) {
     companion object {
         fun fromNote(note: Note): NoteEntity =
@@ -24,11 +24,11 @@ data class NoteEntity(
                 content = note.content,
                 category = note.category,
                 date =
-                    note.date
-                        .atZone(
-                            ZoneId.systemDefault(),
-                        ).toInstant()
-                        .toEpochMilli(),
+                note.date
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toInstant()
+                    .toEpochMilli()
             )
     }
 
@@ -39,9 +39,9 @@ data class NoteEntity(
             content = content,
             category = category,
             date =
-                LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(date),
-                    ZoneId.systemDefault(),
-                ),
+            LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(date),
+                ZoneId.systemDefault()
+            )
         )
 }

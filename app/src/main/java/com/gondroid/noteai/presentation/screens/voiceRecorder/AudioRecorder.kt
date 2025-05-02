@@ -26,7 +26,7 @@ class AudioRecorder {
         AudioRecord.getMinBufferSize(
             sampleRate,
             AudioFormat.CHANNEL_IN_MONO,
-            AudioFormat.ENCODING_PCM_16BIT,
+            AudioFormat.ENCODING_PCM_16BIT
         )
 
     private var audioRecord: AudioRecord? = null
@@ -141,7 +141,7 @@ class AudioRecorder {
                 sampleRate,
                 AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT,
-                bufferSize,
+                bufferSize
             )
 
         audioRecord?.startRecording()

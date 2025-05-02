@@ -39,7 +39,7 @@ class NoteDaoTest : LocalDatabase() {
     fun notesFlowTest() = runBlocking {
         val data = listOf<NoteEntity>(
             NoteEntity.fromNote(mockNote(id = "1", title = "Nota 1")),
-            NoteEntity.fromNote(mockNote(id = "2", title = "Nota 2")),
+            NoteEntity.fromNote(mockNote(id = "2", title = "Nota 2"))
         )
 
         data.forEach { note -> noteDao.upsertNote(note) }
@@ -49,6 +49,5 @@ class NoteDaoTest : LocalDatabase() {
         assertEquals(2, notes.size)
         assertEquals("Nota 1", notes[0].title)
         assertEquals("Nota 2", notes[1].title)
-
     }
 }

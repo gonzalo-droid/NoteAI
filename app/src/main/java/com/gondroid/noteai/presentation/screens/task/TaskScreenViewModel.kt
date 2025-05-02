@@ -24,80 +24,80 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskScreenViewModel
-    @Inject
-    constructor(
-        private val savedStateHandle: SavedStateHandle,
-        private val taskLocalDataSource: TaskLocalDataSource,
-    ) : ViewModel() {
-        var state by mutableStateOf(TaskDataState())
-            private set
+@Inject
+constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val taskLocalDataSource: TaskLocalDataSource
+) : ViewModel() {
+    var state by mutableStateOf(TaskDataState())
+        private set
 
-        private val eventChannel = Channel<TaskScreenEvent>()
-        val events = eventChannel.receiveAsFlow()
+    private val eventChannel = Channel<TaskScreenEvent>()
+    val events = eventChannel.receiveAsFlow()
 
-        private val noteData = savedStateHandle.toRoute<TaskScreenRoute>()
+    private val noteData = savedStateHandle.toRoute<TaskScreenRoute>()
 
-        init {
+    init {
 
-            state =
-                state.copy(
-                    date =
-                        LocalDate.now().let {
-                            DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy").format(it)
-                        },
-                )
-
-            noteData.noteId?.let {
-                state = state.copy(noteId = noteData.noteId)
-
-                taskLocalDataSource.tasksFlow
-                    .onEach { tasks ->
-                        val taskFiler = tasks.filter { it.noteId == noteData.noteId }
-                        val completedTasks =
-                            taskFiler
-                                .filter { task -> task.isCompleted }
-                                .sortedByDescending { task ->
-                                    task.date
-                                }
-                        val pendingTasks =
-                            taskFiler
-                                .filter { task ->
-                                    !task.isCompleted
-                                }.sortedByDescending { task ->
-                                    task.date
-                                }
-
-                        state =
-                            state.copy(
-                                summary = pendingTasks.size.toString(),
-                                completedTask = completedTasks,
-                                pendingTask = pendingTasks,
-                            )
-                    }.launchIn(viewModelScope)
-            }
-        }
-
-        fun onAction(action: TaskScreenAction) {
-            viewModelScope.launch {
-                when (action) {
-                    is OnDeleteTask -> {
-                        taskLocalDataSource.removeTask(action.task)
-                        eventChannel.send(TaskScreenEvent.DeletedTask)
-                    }
-
-                    is OnToggleTask -> {
-                        val updatedTask = action.task.copy(isCompleted = !action.task.isCompleted)
-                        taskLocalDataSource.updateTask(updatedTask)
-                        eventChannel.send(TaskScreenEvent.UpdatedTask)
-                    }
-
-                    OnDeleteAllTasks -> {
-                        taskLocalDataSource.deleteAllTasks()
-                        eventChannel.send(TaskScreenEvent.AllTaskDeleted)
-                    }
-
-                    else -> Unit
+        state =
+            state.copy(
+                date =
+                LocalDate.now().let {
+                    DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy").format(it)
                 }
+            )
+
+        noteData.noteId?.let {
+            state = state.copy(noteId = noteData.noteId)
+
+            taskLocalDataSource.tasksFlow
+                .onEach { tasks ->
+                    val taskFiler = tasks.filter { it.noteId == noteData.noteId }
+                    val completedTasks =
+                        taskFiler
+                            .filter { task -> task.isCompleted }
+                            .sortedByDescending { task ->
+                                task.date
+                            }
+                    val pendingTasks =
+                        taskFiler
+                            .filter { task ->
+                                !task.isCompleted
+                            }.sortedByDescending { task ->
+                                task.date
+                            }
+
+                    state =
+                        state.copy(
+                            summary = pendingTasks.size.toString(),
+                            completedTask = completedTasks,
+                            pendingTask = pendingTasks
+                        )
+                }.launchIn(viewModelScope)
+        }
+    }
+
+    fun onAction(action: TaskScreenAction) {
+        viewModelScope.launch {
+            when (action) {
+                is OnDeleteTask -> {
+                    taskLocalDataSource.removeTask(action.task)
+                    eventChannel.send(TaskScreenEvent.DeletedTask)
+                }
+
+                is OnToggleTask -> {
+                    val updatedTask = action.task.copy(isCompleted = !action.task.isCompleted)
+                    taskLocalDataSource.updateTask(updatedTask)
+                    eventChannel.send(TaskScreenEvent.UpdatedTask)
+                }
+
+                OnDeleteAllTasks -> {
+                    taskLocalDataSource.deleteAllTasks()
+                    eventChannel.send(TaskScreenEvent.AllTaskDeleted)
+                }
+
+                else -> Unit
             }
         }
     }
+}

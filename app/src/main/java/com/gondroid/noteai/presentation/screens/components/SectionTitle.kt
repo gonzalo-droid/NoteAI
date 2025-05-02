@@ -13,7 +13,7 @@ import com.gondroid.noteai.ui.theme.NoteAppTheme
 @Composable
 fun SectionTitle(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String
 ) {
     Box {
         Text(
@@ -21,8 +21,8 @@ fun SectionTitle(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier =
-                modifier
-                    .padding(8.dp),
+            modifier
+                .padding(8.dp)
         )
     }
 }
@@ -30,12 +30,12 @@ fun SectionTitle(
 @Composable
 @Preview(
     showBackground = true,
-    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_NO,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_NO
 )
 fun SectionTitleLight() {
     NoteAppTheme {
         SectionTitle(
-            title = "Section Title",
+            title = "Section Title"
         )
     }
 }
@@ -43,12 +43,12 @@ fun SectionTitleLight() {
 @Composable
 @Preview(
     showBackground = true,
-    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES
 )
 fun SectionTitleDark() {
     NoteAppTheme {
         SectionTitle(
-            title = "Section Title",
+            title = "Section Title"
         )
     }
 }

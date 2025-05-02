@@ -4,6 +4,6 @@ sealed interface NoteScreenAction {
     data object OnAddNote : NoteScreenAction
 
     data class OnClickNote(
-        val noteId: String,
+        val noteId: String
     ) : NoteScreenAction
 }

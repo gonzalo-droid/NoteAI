@@ -16,7 +16,7 @@ class WhisperTranscriber {
 
     fun transcribeAudio(
         filePath: String,
-        callback: (String?) -> Unit,
+        callback: (String?) -> Unit
     ) {
         val file = File(filePath)
         val requestBody =
@@ -40,7 +40,7 @@ class WhisperTranscriber {
             object : Callback {
                 override fun onFailure(
                     call: Call,
-                    e: IOException,
+                    e: IOException
                 ) {
                     Log.e("WhisperTranscriber", "Error: ${e.message}")
                     callback(null)
@@ -48,7 +48,7 @@ class WhisperTranscriber {
 
                 override fun onResponse(
                     call: Call,
-                    response: Response,
+                    response: Response
                 ) {
                     response.body?.string()?.let { responseBody ->
                         val jsonObject = JSONObject(responseBody)
@@ -58,7 +58,7 @@ class WhisperTranscriber {
                         callback(text)
                     } ?: callback(null)
                 }
-            },
+            }
         )
     }
 }

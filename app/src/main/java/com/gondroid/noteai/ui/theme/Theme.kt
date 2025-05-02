@@ -43,7 +43,7 @@ private val lightScheme =
         surfaceContainerLow = surfaceContainerLowLight,
         surfaceContainer = surfaceContainerLight,
         surfaceContainerHigh = surfaceContainerHighLight,
-        surfaceContainerHighest = surfaceContainerHighestLight,
+        surfaceContainerHighest = surfaceContainerHighestLight
     )
 
 private val darkScheme =
@@ -82,7 +82,7 @@ private val darkScheme =
         surfaceContainerLow = surfaceContainerLowDark,
         surfaceContainer = surfaceContainerDark,
         surfaceContainerHigh = surfaceContainerHighDark,
-        surfaceContainerHighest = surfaceContainerHighestDark,
+        surfaceContainerHighest = surfaceContainerHighestDark
     )
 
 @Immutable
@@ -90,7 +90,7 @@ data class ColorFamily(
     val color: Color,
     val onColor: Color,
     val colorContainer: Color,
-    val onColorContainer: Color,
+    val onColorContainer: Color
 )
 
 val unspecified_scheme =
@@ -98,7 +98,7 @@ val unspecified_scheme =
         Color.Unspecified,
         Color.Unspecified,
         Color.Unspecified,
-        Color.Unspecified,
+        Color.Unspecified
     )
 
 @Composable
@@ -106,7 +106,7 @@ fun NoteAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content:
         @Composable()
-        () -> Unit,
+        () -> Unit
 ) {
     val colorScheme =
         when {
@@ -117,6 +117,6 @@ fun NoteAppTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = AppTypography,
-        content = content,
+        content = content
     )
 }

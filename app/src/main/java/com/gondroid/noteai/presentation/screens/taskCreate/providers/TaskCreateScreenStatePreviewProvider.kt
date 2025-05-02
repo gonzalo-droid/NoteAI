@@ -13,31 +13,31 @@ class TaskCreateScreenStatePreviewProvider : PreviewParameterProvider<TaskCreate
                     taskName = TextFieldState("Task 1"),
                     taskDescription = TextFieldState("Description 1"),
                     isTaskDone = false,
-                    category = Category.WORK,
+                    category = Category.WORK
                 ),
                 TaskCreateScreenState(
                     taskName = TextFieldState("Task 2"),
                     taskDescription = TextFieldState("Description 2"),
                     isTaskDone = true,
-                    category = Category.WORK,
+                    category = Category.WORK
                 ),
                 TaskCreateScreenState(
                     taskName = TextFieldState("Task 3"),
                     taskDescription = TextFieldState("Description 3"),
                     isTaskDone = false,
-                    category = Category.OTHER,
+                    category = Category.OTHER
                 ),
                 TaskCreateScreenState(
                     taskName = TextFieldState("Task 4"),
                     taskDescription = TextFieldState("Description 4"),
                     isTaskDone = true,
-                    category = null,
+                    category = null
                 ),
                 TaskCreateScreenState(
                     taskName = TextFieldState("Task 5"),
                     taskDescription = TextFieldState(""),
                     isTaskDone = false,
-                    category = null,
-                ),
+                    category = null
+                )
             )
 }

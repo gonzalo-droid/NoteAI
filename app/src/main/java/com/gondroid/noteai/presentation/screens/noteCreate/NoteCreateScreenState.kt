@@ -9,5 +9,5 @@ data class NoteCreateScreenState(
     val content: TextFieldState = TextFieldState(),
     val category: String? = null,
     val canSaveNote: Boolean = false,
-    val voiceRecordings: List<VoiceRecorder> = emptyList(),
+    val voiceRecordings: List<VoiceRecorder> = emptyList()
 )

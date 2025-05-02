@@ -8,5 +8,5 @@ data class VoiceRecorder(
     val name: String?,
     val path: String,
     val transcription: String?,
-    val date: LocalDateTime = LocalDateTime.now(),
+    val date: LocalDateTime = LocalDateTime.now()
 )

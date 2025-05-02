@@ -58,7 +58,7 @@ fun AudioPlayerItemRoot(
     transcription: String?,
     date: String,
     audioUri: Uri,
-    onTranscribe: () -> Unit,
+    onTranscribe: () -> Unit
 ) {
     val context = LocalContext.current
     val mediaPlayer = remember { MediaPlayer() }
@@ -110,7 +110,7 @@ fun AudioPlayerItemRoot(
                 mediaPlayer.start()
             }
             isPlaying = !isPlaying
-        },
+        }
     )
 }
 
@@ -124,7 +124,7 @@ fun AudioPlayerItem(
     progress: Float,
     duration: Float,
     isPlaying: Boolean,
-    onTogglePlay: () -> Unit,
+    onTogglePlay: () -> Unit
 ) {
     var isOpen by remember { mutableStateOf(true) }
     var isLoading by remember { mutableStateOf(false) }
@@ -132,11 +132,11 @@ fun AudioPlayerItem(
     Column {
         Row(
             modifier =
-                modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.inversePrimary)
-                    .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.inversePrimary)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(imageVector = Icons.Default.MusicNote, contentDescription = "Audio Icon")
             Spacer(modifier = Modifier.width(8.dp))
@@ -147,14 +147,14 @@ fun AudioPlayerItem(
                     value = progress,
                     onValueChange = {},
                     valueRange = 0f..duration,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
             IconButton(onClick = { onTogglePlay() }) {
                 Icon(
                     imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                    contentDescription = "Play/Pause",
+                    contentDescription = "Play/Pause"
                 )
             }
 
@@ -168,13 +168,13 @@ fun AudioPlayerItem(
             } else {
                 CircularProgressIndicator(
                     modifier =
-                        Modifier
-                            .padding(0.dp)
-                            .align(Alignment.CenterVertically)
-                            .width(30.dp)
-                            .height(30.dp),
+                    Modifier
+                        .padding(0.dp)
+                        .align(Alignment.CenterVertically)
+                        .width(30.dp)
+                        .height(30.dp),
                     color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             }
         }
@@ -183,62 +183,62 @@ fun AudioPlayerItem(
             isLoading = false
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 2.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.tertiary),
-                verticalArrangement = Arrangement.Top,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 2.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.tertiary),
+                verticalArrangement = Arrangement.Top
             ) {
                 Button(
                     onClick = { isOpen = !isOpen },
                     modifier =
-                        Modifier
-                            .fillMaxWidth(),
+                    Modifier
+                        .fillMaxWidth(),
                     shape =
-                        RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp,
-                        ),
+                    RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomEnd = 0.dp,
+                        bottomStart = 0.dp
+                    ),
                     colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.tertiary,
-                        ),
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary
+                    )
                 ) {
                     Text(
-                        text = "Trancripción",
+                        text = "Trancripción"
                     )
                     Icon(
                         imageVector = if (isOpen) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 }
 
                 AnimatedVisibility(visible = isOpen) {
                     Box(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .background(Color.White)
-                                .border(
-                                    width = 1.dp,
-                                    color = MaterialTheme.colorScheme.tertiary,
-                                    shape =
-                                        RoundedCornerShape(
-                                            topStart = 0.dp,
-                                            topEnd = 0.dp,
-                                            bottomEnd = 8.dp,
-                                            bottomStart = 8.dp,
-                                        ),
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .background(Color.White)
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.tertiary,
+                                shape =
+                                RoundedCornerShape(
+                                    topStart = 0.dp,
+                                    topEnd = 0.dp,
+                                    bottomEnd = 8.dp,
+                                    bottomStart = 8.dp
+                                )
+                            )
                     ) {
                         Text(
                             text = it,
                             modifier =
-                                Modifier
-                                    .padding(8.dp),
+                            Modifier
+                                .padding(8.dp)
                         )
                     }
                 }
@@ -260,11 +260,11 @@ fun CustomTooltipExample() {
             Popup {
                 Box(
                     modifier =
-                        Modifier
-                            .background(
-                                Color.Black.copy(alpha = 0.8f),
-                                shape = RoundedCornerShape(8.dp),
-                            ).padding(8.dp),
+                    Modifier
+                        .background(
+                            Color.Black.copy(alpha = 0.8f),
+                            shape = RoundedCornerShape(8.dp)
+                        ).padding(8.dp)
                 ) {
                     Text("Custom Tooltip", color = Color.White)
                 }
@@ -275,7 +275,7 @@ fun CustomTooltipExample() {
 
 @Composable
 @Preview(
-    showBackground = true,
+    showBackground = true
 )
 fun AudioPlayerItemDark() {
     NoteAppTheme {
@@ -288,7 +288,7 @@ fun AudioPlayerItemDark() {
             duration = 3f,
             onTogglePlay = {},
             isPlaying = false,
-            transcription = "transcription on real time",
+            transcription = "transcription on real time"
         )
     }
 }

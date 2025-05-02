@@ -17,7 +17,7 @@ data class VoiceRecorderEntity(
     val name: String?,
     val path: String,
     val transcription: String?,
-    val date: Long,
+    val date: Long
 ) {
     companion object {
         fun fromVoiceRecorder(voiceRecorder: VoiceRecorder): VoiceRecorderEntity =
@@ -28,11 +28,11 @@ data class VoiceRecorderEntity(
                 path = voiceRecorder.path,
                 transcription = voiceRecorder.transcription,
                 date =
-                    voiceRecorder.date
-                        .atZone(
-                            ZoneId.systemDefault(),
-                        ).toInstant()
-                        .toEpochMilli(),
+                voiceRecorder.date
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toInstant()
+                    .toEpochMilli()
             )
     }
 
@@ -44,9 +44,9 @@ data class VoiceRecorderEntity(
             path = path,
             transcription = transcription,
             date =
-                LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(date),
-                    ZoneId.systemDefault(),
-                ),
+            LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(date),
+                ZoneId.systemDefault()
+            )
         )
 }

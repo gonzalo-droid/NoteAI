@@ -31,7 +31,7 @@ fun SummaryInfo(
     date: String = "March 9, 2024",
     tasksSummary: String = "5 incomplete, 5 completed",
     completedTasks: Int = 5,
-    totalTask: Int = 10,
+    totalTask: Int = 10
 ) {
     val angleRatio =
         remember {
@@ -41,56 +41,56 @@ fun SummaryInfo(
     LaunchedEffect(completedTasks, totalTask) {
         if (totalTask == 0) {
             angleRatio.animateTo(
-                targetValue = 0f,
+                targetValue = 0f
             )
             return@LaunchedEffect
         }
         angleRatio.animateTo(
             targetValue = (completedTasks.toFloat() / totalTask.toFloat()),
             animationSpec =
-                tween( // animation type
-                    durationMillis = 300,
-                ),
+            tween( // animation type
+                durationMillis = 300
+            )
         )
     }
 
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
             modifier =
-                Modifier
-                    .weight(1.5f)
-                    .padding(16.dp),
+            Modifier
+                .weight(1.5f)
+                .padding(16.dp)
         ) {
             Text(
                 text = date,
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onBackground,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
 
             Text(
                 text = stringResource(R.string.summary, tasksSummary),
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                Modifier
-                    .padding(16.dp)
-                    .aspectRatio(1f)
-                    .weight(1f),
+            Modifier
+                .padding(16.dp)
+                .aspectRatio(1f)
+                .weight(1f)
         ) {
             val colorBase = MaterialTheme.colorScheme.inversePrimary
             val progress = MaterialTheme.colorScheme.primary
             val strokeWidth = 16.dp
 
             Canvas(
-                modifier = Modifier.aspectRatio(1f),
+                modifier = Modifier.aspectRatio(1f)
             ) {
                 drawArc(
                     color = colorBase,
@@ -99,10 +99,10 @@ fun SummaryInfo(
                     useCenter = false,
                     size = size,
                     style =
-                        Stroke(
-                            width = strokeWidth.toPx(),
-                            cap = StrokeCap.Round,
-                        ),
+                    Stroke(
+                        width = strokeWidth.toPx(),
+                        cap = StrokeCap.Round
+                    )
                 )
 
                 if (completedTasks <= totalTask) {
@@ -113,10 +113,10 @@ fun SummaryInfo(
                         useCenter = false,
                         size = size,
                         style =
-                            Stroke(
-                                width = strokeWidth.toPx(),
-                                cap = StrokeCap.Round,
-                            ),
+                        Stroke(
+                            width = strokeWidth.toPx(),
+                            cap = StrokeCap.Round
+                        )
                     )
                 }
             }
@@ -125,7 +125,7 @@ fun SummaryInfo(
                 text = "${(completedTasks / totalTask.toFloat()).times(100).toInt()}%",
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
         }
     }
@@ -133,7 +133,7 @@ fun SummaryInfo(
 
 @Composable
 @Preview(
-    showBackground = true,
+    showBackground = true
 )
 fun SummaryInfoPreviewLight() {
     NoteAppTheme {
@@ -144,7 +144,7 @@ fun SummaryInfoPreviewLight() {
 @Composable
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 fun SummaryInfoPreviewDark() {
     NoteAppTheme {

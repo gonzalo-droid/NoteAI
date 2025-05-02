@@ -7,5 +7,5 @@ data class Note(
     val title: String,
     val content: String?,
     val category: String? = null,
-    val date: LocalDateTime = LocalDateTime.now(),
+    val date: LocalDateTime = LocalDateTime.now()
 )

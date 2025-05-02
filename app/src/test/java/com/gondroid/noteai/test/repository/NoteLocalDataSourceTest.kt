@@ -29,7 +29,7 @@ class NoteLocalDataSourceTest {
     fun setup() {
         dataSource = RoomNoteLocalDataSource(noteDao, coroutineRule.testDispatcher)
     }
-    
+
     @Test
     fun `notesFlow should emit transformed notes`() = runTest {
         val notesEntities = listOf(

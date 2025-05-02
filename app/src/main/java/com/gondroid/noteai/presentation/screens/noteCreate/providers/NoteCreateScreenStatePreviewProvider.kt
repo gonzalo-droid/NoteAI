@@ -12,12 +12,12 @@ class NoteCreateScreenStatePreviewProvider : PreviewParameterProvider<NoteCreate
                 NoteCreateScreenState(
                     title = TextFieldState("Note 1"),
                     content = TextFieldState("Description 1"),
-                    category = Category.WORK.name,
+                    category = Category.WORK.name
                 ),
                 NoteCreateScreenState(
                     title = TextFieldState("Note 2"),
                     content = TextFieldState("Description 2"),
-                    category = Category.WORK.name,
-                ),
+                    category = Category.WORK.name
+                )
             )
 }

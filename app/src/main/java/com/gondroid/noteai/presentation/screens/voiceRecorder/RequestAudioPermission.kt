@@ -19,7 +19,7 @@ fun RequestAudioPermission(onPermissionGranted: (Boolean) -> Unit) {
                     onPermissionGranted(false)
                     Log.d("AudioRecorder", "Permiso de audio denegado")
                 }
-            },
+            }
         )
 
     LaunchedEffect(Unit) {

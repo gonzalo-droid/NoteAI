@@ -17,9 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 class NoteScreenViewModelTest {
-
 
     @get:Rule
     val coroutineRule = MainDispatcherRule()
@@ -34,7 +32,6 @@ class NoteScreenViewModelTest {
         viewModel = NoteScreenViewModel(noteLocalDataSource)
     }
 
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `state updates when notesFlow emits new data`() = runTest {
@@ -48,9 +45,9 @@ class NoteScreenViewModelTest {
                             🥩 Proteínas saludables  
                             🥛 Lácteos y cereales  
                             Evita compras impulsivas y aprovecha ofertas. ¡Ahorra dinero!  
-                            """.trimIndent(),
-                category = "COMPRAS",
-            ),
+                """.trimIndent(),
+                category = "COMPRAS"
+            )
         )
 
         val notesFlow = MutableStateFlow(fakeNotes)
@@ -59,7 +56,7 @@ class NoteScreenViewModelTest {
 
         viewModel = NoteScreenViewModel(noteLocalDataSource)
 
-       // Esperamos que el estado se actualice
+        // Esperamos que el estado se actualice
         advanceUntilIdle() // Espera a que coroutines finalicen
 
         assertEquals(fakeNotes, viewModel.state.notes)

@@ -35,12 +35,11 @@ class TaskDaoTest : LocalDatabase() {
         assertEquals(retrievedData, null)
     }
 
-
     @Test
     fun tasksFlowTest() = runBlocking {
         val data = listOf<TaskEntity>(
             TaskEntity.fromTask(mockTask(id = "1", title = "Task 1")),
-            TaskEntity.fromTask(mockTask(id = "2", title = "Task 2")),
+            TaskEntity.fromTask(mockTask(id = "2", title = "Task 2"))
         )
 
         data.forEach { task -> taskDao.upsertTask(task) }
@@ -50,6 +49,5 @@ class TaskDaoTest : LocalDatabase() {
         assertEquals(2, tasks.size)
         assertEquals("Task 1", tasks[0].title)
         assertEquals("Task 2", tasks[1].title)
-
     }
 }

@@ -4,11 +4,11 @@ import com.gondroid.noteai.domain.Task
 
 sealed interface TaskScreenAction {
     data class OnToggleTask(
-        val task: Task,
+        val task: Task
     ) : TaskScreenAction
 
     data class OnDeleteTask(
-        val task: Task,
+        val task: Task
     ) : TaskScreenAction
 
     data object OnDeleteAllTasks : TaskScreenAction
@@ -16,7 +16,7 @@ sealed interface TaskScreenAction {
     data object OnAddTask : TaskScreenAction
 
     data class OnClickTask(
-        val taskId: String,
+        val taskId: String
     ) : TaskScreenAction
 
     data object Back : TaskScreenAction

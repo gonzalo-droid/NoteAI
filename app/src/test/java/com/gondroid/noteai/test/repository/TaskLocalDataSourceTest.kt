@@ -73,5 +73,4 @@ class TaskLocalDataSourceTest {
         assertEquals("Title", result?.title)
         assertEquals("Content", result?.description)
     }
-
 }

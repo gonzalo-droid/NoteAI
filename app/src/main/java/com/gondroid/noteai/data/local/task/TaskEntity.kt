@@ -18,7 +18,7 @@ data class TaskEntity(
     val description: String?,
     @ColumnInfo(name = "is_completed")
     val isCompleted: Boolean,
-    val date: Long,
+    val date: Long
 ) {
     companion object {
         fun fromTask(task: Task): TaskEntity =
@@ -29,11 +29,11 @@ data class TaskEntity(
                 description = task.description,
                 isCompleted = task.isCompleted,
                 date =
-                    task.date
-                        .atZone(
-                            ZoneId.systemDefault(),
-                        ).toInstant()
-                        .toEpochMilli(),
+                task.date
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toInstant()
+                    .toEpochMilli()
             )
     }
 
@@ -45,9 +45,9 @@ data class TaskEntity(
             description = description,
             isCompleted = isCompleted,
             date =
-                LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(date),
-                    ZoneId.systemDefault(),
-                ),
+            LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(date),
+                ZoneId.systemDefault()
+            )
         )
 }

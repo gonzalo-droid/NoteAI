@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TaskScreenRoute(
-    val noteId: String? = null,
+    val noteId: String? = null
 )
 
 @Serializable
@@ -15,13 +15,13 @@ object NoteScreenRoute
 @Serializable
 data class TaskCreateScreenRoute(
     val noteId: String,
-    val taskId: String? = null,
+    val taskId: String? = null
 )
 
 @Parcelize
 @Serializable
 data class NoteCreateScreenRoute(
-    val noteId: String? = null,
+    val noteId: String? = null
 ) : Parcelable
 
 @Serializable

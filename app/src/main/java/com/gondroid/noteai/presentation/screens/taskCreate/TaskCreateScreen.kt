@@ -46,7 +46,7 @@ import com.gondroid.noteai.ui.theme.NoteAppTheme
 @Composable
 fun TaskCreateScreenRoot(
     navigateBack: () -> Boolean,
-    viewModel: TaskCreateViewModel,
+    viewModel: TaskCreateViewModel
 ) {
     val state = viewModel.state
     val event = viewModel.event
@@ -61,7 +61,7 @@ fun TaskCreateScreenRoot(
                         .makeText(
                             context,
                             context.getString(R.string.task_created),
-                            Toast.LENGTH_SHORT,
+                            Toast.LENGTH_SHORT
                         ).show()
                     navigateBack()
                 }
@@ -80,7 +80,7 @@ fun TaskCreateScreenRoot(
                     viewModel.onAction(action)
                 }
             }
-        },
+        }
     )
 }
 
@@ -89,7 +89,7 @@ fun TaskCreateScreenRoot(
 fun TaskCreateScreen(
     modifier: Modifier = Modifier,
     state: TaskCreateScreenState,
-    onAction: (ActionTask) -> Unit,
+    onAction: (ActionTask) -> Unit
 ) {
     var isDescriptionFocus by remember {
         mutableStateOf(false)
@@ -104,7 +104,7 @@ fun TaskCreateScreen(
                 title = {
                     Text(
                         style = MaterialTheme.typography.headlineSmall,
-                        text = stringResource(R.string.task),
+                        text = stringResource(R.string.task)
                     )
                 },
                 navigationIcon = {
@@ -113,38 +113,38 @@ fun TaskCreateScreen(
                         contentDescription = "Back",
                         tint = MaterialTheme.colorScheme.onBackground,
                         modifier =
-                            Modifier.clickable {
-                                onAction(
-                                    ActionTask.Back,
-                                )
-                            },
+                        Modifier.clickable {
+                            onAction(
+                                ActionTask.Back
+                            )
+                        }
                     )
-                },
+                }
             )
-        },
+        }
     ) { paddingValues ->
 
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = stringResource(R.string.done),
                     style =
-                        MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurface,
-                        ),
-                    modifier = Modifier.padding(8.dp),
+                    MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurface
+                    ),
+                    modifier = Modifier.padding(8.dp)
                 )
 
                 Checkbox(
@@ -152,123 +152,123 @@ fun TaskCreateScreen(
                     onCheckedChange = {
                         onAction(
                             ActionTask.ChangeTaskDone(
-                                isTaskDone = it,
-                            ),
+                                isTaskDone = it
+                            )
                         )
-                    },
+                    }
                 )
             }
 
             BasicTextField(
                 state = state.taskName,
                 textStyle =
-                    MaterialTheme.typography.headlineLarge.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Bold,
-                    ),
+                MaterialTheme.typography.headlineLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold
+                ),
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
                 lineLimits = TextFieldLineLimits.SingleLine,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
                 decorator = { innerTextField ->
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         if ((
-                                state.taskName.text
-                                    .toString()
-                                    .isEmpty()
+                            state.taskName.text
+                                .toString()
+                                .isEmpty()
                             )
                         ) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.title),
                                 color =
-                                    MaterialTheme.colorScheme.onSurface.copy(
-                                        alpha = 0.5f,
-                                    ),
+                                MaterialTheme.colorScheme.onSurface.copy(
+                                    alpha = 0.5f
+                                ),
                                 style =
-                                    MaterialTheme.typography.headlineLarge.copy(
-                                        fontWeight = FontWeight.Bold,
-                                    ),
+                                MaterialTheme.typography.headlineLarge.copy(
+                                    fontWeight = FontWeight.Bold
+                                )
                             )
                         } else {
                             innerTextField()
                         }
                     }
-                },
+                }
             )
 
             BasicTextField(
                 state = state.taskDescription,
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
                 textStyle =
-                    MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                    ),
+                MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
                 lineLimits =
-                    if (isDescriptionFocus) {
-                        TextFieldLineLimits.MultiLine(
-                            minHeightInLines = 1,
-                            maxHeightInLines = 5,
-                        )
-                    } else {
-                        TextFieldLineLimits.Default
-                    },
+                if (isDescriptionFocus) {
+                    TextFieldLineLimits.MultiLine(
+                        minHeightInLines = 1,
+                        maxHeightInLines = 5
+                    )
+                } else {
+                    TextFieldLineLimits.Default
+                },
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .onFocusChanged {
-                            isDescriptionFocus = it.isFocused
-                        },
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .onFocusChanged {
+                        isDescriptionFocus = it.isFocused
+                    },
                 decorator = { innerTextField ->
                     Column {
                         if (state.taskDescription.text
-                                .toString()
-                                .isEmpty() &&
+                            .toString()
+                            .isEmpty() &&
                             !isDescriptionFocus
                         ) {
                             Text(
                                 text = stringResource(R.string.task_description),
                                 color =
-                                    MaterialTheme.colorScheme.onSurface.copy(
-                                        alpha = 0.5f,
-                                    ),
+                                MaterialTheme.colorScheme.onSurface.copy(
+                                    alpha = 0.5f
+                                )
                             )
                         } else {
                             innerTextField()
                         }
                     }
-                },
+                }
             )
 
             Spacer(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f)
             )
 
             Button(
                 enabled = state.canSaveTask,
                 onClick = {
                     onAction(
-                        ActionTask.SaveTask,
+                        ActionTask.SaveTask
                     )
                 },
                 modifier =
-                    Modifier
-                        .fillMaxWidth(),
+                Modifier
+                    .fillMaxWidth()
             ) {
                 Text(
                     text = stringResource(R.string.save),
                     style = MaterialTheme.typography.titleMedium,
                     color =
-                        if (state.canSaveTask) {
-                            MaterialTheme.colorScheme.onPrimary
-                        } else {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        },
+                    if (state.canSaveTask) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    }
                 )
             }
         }
@@ -278,27 +278,27 @@ fun TaskCreateScreen(
 @Composable
 @Preview
 fun TaskCreateScreenLightPreview(
-    @PreviewParameter(TaskCreateScreenStatePreviewProvider::class) state: TaskCreateScreenState,
+    @PreviewParameter(TaskCreateScreenStatePreviewProvider::class) state: TaskCreateScreenState
 ) {
     NoteAppTheme {
         TaskCreateScreen(
             state = state,
-            onAction = {},
+            onAction = {}
         )
     }
 }
 
 @Composable
 @Preview(
-    uiMode = UI_MODE_NIGHT_YES,
+    uiMode = UI_MODE_NIGHT_YES
 )
 fun TaskCreateScreenDarkPreview(
-    @PreviewParameter(TaskCreateScreenStatePreviewProvider::class) state: TaskCreateScreenState,
+    @PreviewParameter(TaskCreateScreenStatePreviewProvider::class) state: TaskCreateScreenState
 ) {
     NoteAppTheme {
         TaskCreateScreen(
             state = state,
-            onAction = {},
+            onAction = {}
         )
     }
 }

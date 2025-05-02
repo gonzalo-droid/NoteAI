@@ -11,7 +11,7 @@ class DateUtil {
             val localDateTime =
                 LocalDateTime.ofInstant(
                     Instant.ofEpochMilli(date),
-                    ZoneId.systemDefault(),
+                    ZoneId.systemDefault()
                 )
 
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yy hh:mm a")

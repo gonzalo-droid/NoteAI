@@ -8,10 +8,10 @@ sealed interface ActionTask {
     data object Back : ActionTask
 
     data class ChangeTaskCategory(
-        val category: Category?,
+        val category: Category?
     ) : ActionTask
 
     data class ChangeTaskDone(
-        val isTaskDone: Boolean,
+        val isTaskDone: Boolean
     ) : ActionTask
 }

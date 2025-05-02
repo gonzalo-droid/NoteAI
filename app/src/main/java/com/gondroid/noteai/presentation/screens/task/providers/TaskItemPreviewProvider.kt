@@ -14,7 +14,7 @@ class TaskItemPreviewProvider : PreviewParameterProvider<Task> {
                     title = "Task 1",
                     isCompleted = false,
                     description = "Description 1",
-                    category = Category.WORK,
+                    category = Category.WORK
                 ),
                 Task(
                     id = "2",
@@ -22,7 +22,7 @@ class TaskItemPreviewProvider : PreviewParameterProvider<Task> {
                     title = "Task 2",
                     isCompleted = true,
                     description = "Description 2",
-                    category = Category.OTHER,
-                ),
+                    category = Category.OTHER
+                )
             )
 }

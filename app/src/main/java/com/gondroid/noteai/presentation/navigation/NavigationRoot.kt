@@ -23,11 +23,11 @@ import com.gondroid.noteai.presentation.screens.voiceRecorder.VoiceRecorderScree
 @Composable
 fun NavigationRoot(navController: NavHostController) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
     ) {
         NavHost(
             navController = navController,
-            startDestination = NoteScreenRoute,
+            startDestination = NoteScreenRoute
         ) {
             composable<NoteScreenRoute> {
                 val viewmodel = hiltViewModel<NoteScreenViewModel>()
@@ -36,10 +36,10 @@ fun NavigationRoot(navController: NavHostController) {
                     navigateTo = { noteId ->
                         navController.navigate(
                             NoteCreateScreenRoute(
-                                noteId = noteId,
-                            ),
+                                noteId = noteId
+                            )
                         )
-                    },
+                    }
                 )
             }
 
@@ -68,7 +68,7 @@ fun NavigationRoot(navController: NavHostController) {
                     },
                     navigateToMyTask = { nodeId ->
                         navController.navigate(TaskScreenRoute(noteId = nodeId))
-                    },
+                    }
                 )
             }
 
@@ -83,10 +83,10 @@ fun NavigationRoot(navController: NavHostController) {
                         navController.navigate(
                             TaskCreateScreenRoute(
                                 taskId = taskId,
-                                noteId = noteId,
-                            ),
+                                noteId = noteId
+                            )
                         )
-                    },
+                    }
                 )
             }
 
@@ -96,7 +96,7 @@ fun NavigationRoot(navController: NavHostController) {
                     viewModel = viewmodel,
                     navigateBack = {
                         navController.navigateUp()
-                    },
+                    }
                 )
             }
 
@@ -110,7 +110,7 @@ fun NavigationRoot(navController: NavHostController) {
                             ?.savedStateHandle
                             ?.set("recordedFilePath", filePath)
                         navController.popBackStack()
-                    },
+                    }
                 )
             }
         }

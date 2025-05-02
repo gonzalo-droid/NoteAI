@@ -32,7 +32,7 @@ import com.gondroid.noteai.ui.theme.NoteAppTheme
 @Composable
 fun NotesScreenRoot(
     viewModel: NoteScreenViewModel,
-    navigateTo: (String?) -> Unit,
+    navigateTo: (String?) -> Unit
 ) {
     val state = viewModel.state
     val event = viewModel.events
@@ -44,7 +44,7 @@ fun NotesScreenRoot(
                 is NoteScreenAction.OnAddNote -> navigateTo(null)
                 is NoteScreenAction.OnClickNote -> navigateTo(action.noteId)
             }
-        },
+        }
     )
 }
 
@@ -53,7 +53,7 @@ fun NotesScreenRoot(
 fun NotesScreen(
     modifier: Modifier = Modifier,
     state: NoteDataState,
-    onAction: (NoteScreenAction) -> Unit,
+    onAction: (NoteScreenAction) -> Unit
 ) {
     var isMenuExtended by remember { mutableStateOf(false) }
 
@@ -65,11 +65,11 @@ fun NotesScreen(
                     Text(
                         text = "Notes.AI",
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
                 },
                 actions = {
-                },
+                }
             )
         },
         floatingActionButton = {
@@ -81,11 +81,11 @@ fun NotesScreen(
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Task",
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
-                },
+                }
             )
-        },
+        }
     ) { paddingValues ->
 
         LazyVerticalStaggeredGrid(
@@ -95,7 +95,7 @@ fun NotesScreen(
                 .padding(horizontal = 16.dp),
             columns = StaggeredGridCells.Fixed(2),
             verticalItemSpacing = 4.dp,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(
                 items = state.notes,
@@ -106,7 +106,7 @@ fun NotesScreen(
                     onItemSelected = {
                         onAction(NoteScreenAction.OnClickNote(noteId = note.id))
                     },
-                    note = note,
+                    note = note
                 )
             }
         }
@@ -116,30 +116,30 @@ fun NotesScreen(
 @Preview
 @Composable
 fun TaskScreenPreviewLight(
-    @PreviewParameter(NoteScreenPreviewProvider::class) state: NoteDataState,
+    @PreviewParameter(NoteScreenPreviewProvider::class) state: NoteDataState
 ) {
     NoteAppTheme {
         NotesScreen(
             state = state,
             onAction = {
-            },
+            }
         )
     }
 }
 
 @Preview(
     showBackground = true,
-    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun TaskScreenPreviewDark(
-    @PreviewParameter(NoteScreenPreviewProvider::class) state: NoteDataState,
+    @PreviewParameter(NoteScreenPreviewProvider::class) state: NoteDataState
 ) {
     NoteAppTheme {
         NotesScreen(
             state = state,
             onAction = {
-            },
+            }
         )
     }
 }

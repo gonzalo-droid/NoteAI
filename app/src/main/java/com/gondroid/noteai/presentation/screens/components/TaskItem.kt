@@ -45,14 +45,14 @@ fun TaskItemPreview() {
             },
             onToggleCompletion = {},
             task =
-                Task(
-                    id = "",
-                    noteId = "",
-                    title = "Task 1",
-                    description = "Description 1",
-                    isCompleted = false,
-                    category = Category.SHOPPING,
-                ),
+            Task(
+                id = "",
+                noteId = "",
+                title = "Task 1",
+                description = "Description 1",
+                isCompleted = false,
+                category = Category.SHOPPING
+            )
         )
     }
 }
@@ -62,31 +62,31 @@ fun TaskItem(
     modifier: Modifier = Modifier,
     onItemSelected: (ActionOnSelected, String) -> Unit,
     onToggleCompletion: (Task) -> Unit,
-    task: Task,
+    task: Task
 ) {
     Row(
         modifier =
-            modifier
-                .clickable {
-                    onItemSelected(ActionOnSelected.DONE, task.id)
-                }.background(MaterialTheme.colorScheme.surfaceContainer)
-                .padding(horizontal = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        modifier
+            .clickable {
+                onItemSelected(ActionOnSelected.DONE, task.id)
+            }.background(MaterialTheme.colorScheme.surfaceContainer)
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
             checked = task.isCompleted,
             onCheckedChange = {
                 onToggleCompletion(task)
-            },
+            }
         )
 
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier =
-                Modifier
-                    .padding(8.dp)
-                    .weight(1f),
+            Modifier
+                .padding(8.dp)
+                .weight(1f)
         ) {
             Text(
                 text = task.title,
@@ -95,7 +95,7 @@ fun TaskItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis, // Hol..
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
 
             if (!task.isCompleted) {
@@ -105,7 +105,7 @@ fun TaskItem(
                         maxLines = 2,
                         style = MaterialTheme.typography.bodySmall,
                         overflow = TextOverflow.Ellipsis, // Hol..
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -115,7 +115,7 @@ fun TaskItem(
                         maxLines = 2,
                         style = MaterialTheme.typography.bodySmall,
                         overflow = TextOverflow.Ellipsis, // Hol..
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -127,11 +127,11 @@ fun TaskItem(
                 contentDescription = "Delete",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier =
-                    Modifier
-                        .padding(8.dp)
-                        .clickable {
-                            onItemSelected(ActionOnSelected.DELETE, task.id)
-                        },
+                Modifier
+                    .padding(8.dp)
+                    .clickable {
+                        onItemSelected(ActionOnSelected.DELETE, task.id)
+                    }
             )
         }
     }

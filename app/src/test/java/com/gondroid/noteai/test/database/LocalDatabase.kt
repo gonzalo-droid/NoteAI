@@ -25,5 +25,4 @@ abstract class LocalDatabase {
     fun closeDB() {
         db.close()
     }
-
 }

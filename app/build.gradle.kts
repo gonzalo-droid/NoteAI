@@ -50,7 +50,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -121,7 +121,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
-
     // testing
     // Pruebas unitarias básicas con JUnit
     testImplementation(libs.junit.v4132)
@@ -138,7 +137,6 @@ dependencies {
 
     testImplementation(libs.androidx.core) // Para ApplicationProvider
     testImplementation(libs.androidx.core.testing) // Para pruebas de Room
-
 
     /**
      * JUnit: Proporciona el framework básico para pruebas unitarias.
