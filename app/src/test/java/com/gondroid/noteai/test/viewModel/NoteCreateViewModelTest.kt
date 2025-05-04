@@ -15,6 +15,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -40,13 +41,10 @@ class NoteCreateViewModelTest {
     @Test
     fun `when initialized with existing note, state should reflect note details`() = runTest {
         val noteId = "123"
+        val testRoute = NoteCreateScreenRoute(noteId = noteId)
+        val json = Json.encodeToString(NoteCreateScreenRoute.serializer(), testRoute)
+        val savedStateHandle = SavedStateHandle(mapOf("route" to json))
 
-        // ✅ Asignar correctamente el `SavedStateHandle`
-        val savedStateHandle = SavedStateHandle().apply {
-            set("androidx.lifecycle.navArgs", NoteCreateScreenRoute(noteId = noteId))
-        }
-
-        // ✅ Mockear respuesta de `getNoteById`
         coEvery { localDataSource.getNoteById(noteId) } returns Note(
             id = noteId,
             title = "Test Note",
@@ -54,21 +52,16 @@ class NoteCreateViewModelTest {
             category = "Personal"
         )
 
-        // ✅ Instanciar el ViewModel con el `SavedStateHandle`
         viewModel = NoteCreateViewModel(
-            savedStateHandle,
-            localDataSource,
-            voiceRecorderLocalDataSource
+            savedStateHandle = savedStateHandle,
+            localDataSource = localDataSource,
+            voiceRecorderLocalDataSource = voiceRecorderLocalDataSource
         )
-
-        println("init viewmodel")
 
         advanceUntilIdle()
 
-        // ✅ Verificar que se llamó `getNoteById`
         coVerify(exactly = 1) { localDataSource.getNoteById(noteId) }
 
-        // ✅ Validar que el estado del ViewModel se actualizó correctamente
         assertEquals("Test Note", viewModel.state.title.text)
         assertEquals("Test Content", viewModel.state.content.text)
         assertEquals("Personal", viewModel.state.category)

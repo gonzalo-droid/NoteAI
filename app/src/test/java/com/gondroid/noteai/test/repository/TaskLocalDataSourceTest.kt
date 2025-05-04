@@ -1,4 +1,4 @@
-package com.gondroid.taskai.test.repository
+package com.gondroid.noteai.test.repository
 
 import com.gondroid.noteai.data.local.task.RoomTaskLocalDataSource
 import com.gondroid.noteai.data.local.task.TaskDao

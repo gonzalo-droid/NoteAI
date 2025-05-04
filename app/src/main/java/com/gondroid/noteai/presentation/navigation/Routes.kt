@@ -18,11 +18,10 @@ data class TaskCreateScreenRoute(
     val taskId: String? = null
 )
 
-@Parcelize
 @Serializable
 data class NoteCreateScreenRoute(
     val noteId: String? = null
-) : Parcelable
+)
 
 @Serializable
 object VoiceRecorderRoute

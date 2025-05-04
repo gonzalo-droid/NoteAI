@@ -1,12 +1,9 @@
 [versions]
 agp = "8.6.0"
 core = "1.6.1"
-coreTesting = "2.2.0"
-junitVersion = "4.13.2"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 hilt = "2.51.1"
-kotlinxCoroutinesTest = "1.6.4"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 ksp = "2.0.0-1.0.22"
@@ -14,13 +11,11 @@ kotlinx-serialization = "1.6.3"
 coroutines = "1.9.0"
 composeBom = "2024.04.01"
 materialIconsExtended = "1.7.7"
-mockk = "1.13.4"
 navigationCompose = "2.8.1"
 navigationComposeHilt = "1.2.0"
 robolectric = "4.14.1"
 room = "2.6.1"
 roomTesting = "2.5.1"
-turbineVersion = "1.2.0"
 uiTextGoogleFonts = "1.7.5"
 moshi = "1.15.1"
 retrofit = "2.10.0"
@@ -28,7 +23,16 @@ okkhttp = "4.12.0"
 foundationAndroid = "1.7.2"
 foundationLayoutAndroid = "1.7.2"
 ktlint = "11.5.0"
-junit = "4.12"
+
+espressoCore = "3.6.1"
+mockk = "1.13.17"
+mockwebserver = "4.11.0"
+turbine = "1.2.0"
+truth = "1.4.4"
+coreTesting = "2.2.0"
+junitVersion = "4.13.2"
+navigationTesting = "2.8.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,16 +48,16 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 #Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 
 #Hilt (DI)
 dagger-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "navigationComposeHilt" }
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt"}
-
+dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 
 #Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
@@ -62,7 +66,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
 
 #Room
-# Room
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -83,17 +86,24 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 
+#Testing
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockwebserver" } # test service
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" } # runtest runblocking
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" } # unit test
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" } # test flow
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" } # assetions
 
-# test
-app-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
-junit-v4132 = { module = "junit:junit", version.ref = "junitVersion" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
+#Android Testing
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" } # test compose
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" } # test compose
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-test-espresso-core  = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
-
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

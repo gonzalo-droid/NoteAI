@@ -71,6 +71,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE*"
+            excludes += "/META-INF/NOTICE*"
         }
     }
 }
@@ -121,22 +123,36 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
-    // testing
-    // Pruebas unitarias básicas con JUnit
-    testImplementation(libs.junit.v4132)
-    // Pruebas con corutinas
-    testImplementation(libs.kotlinx.coroutines.test)
-    // Librería de mocking (opcional, puedes usar Mockk o Mockito)
-    testImplementation(libs.mockk)
-    // Room Testing: Permite usar la base de datos en memoria
-    testImplementation(libs.androidx.room.testing)
-    // Turbine: Para testear Flows y StateFlow de forma reactiva
-    testImplementation(libs.app.turbine)
+
     // robolectric
     testImplementation(libs.robolectric)
 
+    // Test dependencies
+    testImplementation(libs.junit) // Pruebas unitarias básicas con JUnit
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)     // Librería de mocking (opcional, puedes usar Mockk o Mockito)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.kotlinx.coroutines.test)     // Pruebas con corutinas
+    // Room Testing: Permite usar la base de datos en memoria
+    testImplementation(libs.androidx.room.testing)
+    // Turbine: Para testear Flows y StateFlow de forma reactiva
+    testImplementation(libs.turbine)
+
+    // Android Test dependencies
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.mockk)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.androidx.core) // Para ApplicationProvider
     testImplementation(libs.androidx.core.testing) // Para pruebas de Room
+
+    // Debug dependencies
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     /**
      * JUnit: Proporciona el framework básico para pruebas unitarias.

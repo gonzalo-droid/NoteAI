@@ -54,18 +54,19 @@ constructor(
     init {
         state = state.copy(noteId = noteData.noteId ?: UUID.randomUUID().toString())
         println("SavedStateHandle keys: ${savedStateHandle.keys()}")
-        println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("noteData")}")
+        println("SavedStateHandle noteData: ${savedStateHandle.get<NoteCreateScreenRoute>("route")}")
+        println("noteData: ${noteData.noteId}")
 
         noteData.noteId?.let { noteId ->
             println("get noteId: $noteId")
             viewModelScope.launch {
-                localDataSource.getNoteById(noteId)?.let { task ->
-                    editedNote = task
+                localDataSource.getNoteById(noteId)?.let { note ->
+                    editedNote = note
                     state =
                         state.copy(
-                            title = TextFieldState(task.title),
-                            content = TextFieldState(task.content ?: ""),
-                            category = task.category?.toString()
+                            title = TextFieldState(note.title),
+                            content = TextFieldState(note.content ?: ""),
+                            category = note.category?.toString()
                         )
                 }
             }
